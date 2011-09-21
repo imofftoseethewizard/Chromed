@@ -176,7 +176,7 @@
     return 'ok'
   }
 
-  Channel.prototype.remove_installer = function remove_installer(type, script) {
+  Channel.prototype.remove_installer = function remove_installer(type) {
     delete(installers[type])
     return 'ok'
   }
