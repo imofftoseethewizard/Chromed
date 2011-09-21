@@ -1,0 +1,25 @@
+Prerequisites
+
+  Python
+
+    Any relatively modern version of python will work.  It was developed on 2.7, but little should
+    prevent it from running on later versions.
+
+  Chrome or Chromium Web Browser
+
+    Chromed was written to drive the Chrom* browsers, but parts of it could easily be adapted to
+    any browser that supports websockets.
+
+  Pywebsocket
+
+    Pywebsocket is an experimental Apache module that implements a websocket server.  To install
+    pywebsocket, follow the directions at http://code.google.com/p/pywebsocket/
+
+
+Installation
+
+  In the web browser, view the page chrome://extensions.  Near the top of the page on the right
+  hand side is an expansion toggle, 'Developer mode'.  Make sure that it is expanded.  Look to the
+  left of it for a longish button titled 'Load unpacked extension'.  Click it.  Navigate to the
+  extension folder in the chromed source tree.  Click open.  The Chromed extension should now
+  appear in your list of apps and extensions.

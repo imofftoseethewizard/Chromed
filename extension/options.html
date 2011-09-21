@@ -1,0 +1,57 @@
+<!----------------------------------------------------------------------------------------------
+
+ This file is part of Chromed.
+
+ Chromed is free software: you can redistribute it and/or modify it under the terms of the GNU
+ General Public License as published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.
+
+ Chromed is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+ Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with Chromed.  If not,
+ see <http://www.gnu.org/licenses/>.
+
+ Copyright (c) 2011 Pat M. Lasswell
+
+------------------------------------------------------------------------------------------------->
+<html>
+<head><title>Chromed Options</title></head>
+<script type="text/javascript">
+
+function save_options() {
+  localStorage['socket_url'] = document.getElementById("url").value
+  var status = document.getElementById("status")
+  status.innerHTML = "Options Saved."
+  setTimeout(function() { status.innerHTML = "" }, 750)
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+console.log('restoring options')
+  var url = localStorage['socket_url']
+  if (url)
+    document.getElementById("url").value = localStorage['socket_url']
+}
+
+</script>
+
+<body onload="restore_options()">
+
+Chromed Proxy URL
+<input id="url"></input>
+
+<br>
+<button onclick="save_options()">Save</button>
+</body>
+</html>
+
+<!--
+Local Variables:
+mode: html
+c-basic-offset: 2
+indent-tabs-mode: nil
+fill-column: 98
+End:
+-->

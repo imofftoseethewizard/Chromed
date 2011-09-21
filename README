@@ -1,0 +1,96 @@
+Contents
+
+  Introduction
+  Copyright
+  Licensing
+  Structure
+  Security
+  Usage
+
+
+Introduction
+
+  Chromed is a backdoor into the chrome browser, allowing it to be driven via an open websocket.
+  Three distinct components comprise chromed: an extension to the browser, a standalone websocket
+  server with a custom handler, and a python module to facilitate communication with the websocket
+  server.
+
+
+Copyright
+
+  All but server/standalone.py Copyright (C) Pat M. Lasswell 2011.  The copyright and licensing
+  details of the former are detailed in comments in the file.
+
+
+Licensing
+
+  GNU GPL.
+
+
+Structure
+
+  Extension
+
+    The extension attempts to create a socket to the websocket server. By default the 'root'
+    channel into the browser is open and waiting on success. In response to client requests (via
+    chromed), new tabs may be opened with separate named channels into them.
+       
+  Server
+
+    Chromed needs a persistent process to intermediate between the browser and its server-side
+    clients.  This keeps the websocket connections to the browser alive, which in turn allows
+    client code to make requests of the browser.
+
+  Client
+  
+    At present the client is a single function that enables a one-shot command and reply.
+    Conceivably, a two-way persistent protocol could be developed, but that is more than my
+    present needs require.
+    
+
+Security
+
+  Installation of the chromed extension puts a fairly large hole in the browser's security
+  architecture. It allows a possibly remote party -- by default it's ws://localhost:8080 -- to
+  control a great deal of the browser's functionality. USE ONLY UNDER CONTROLLED CIRCUMSTANCES.
+
+
+Usage
+
+  Installation instructions are in the file INSTALLATION.
+
+  To start the websocket server
+
+    $ cd ~/src/chromed/server
+    $ ./chromed-proxy &
+
+  The extension will eventually find the websocket server and connect to it.  That may take up to
+  4 minutes.  To force extension to reattempt a connection, open a browser window pointing to
+  chrome://extensions, find the chromed extension section and click the 'reload' link. (You can
+  also click the background.html link below under 'active views' and refresh that page.) To check
+  that the connection was successfully negotiated, open the background page and view the
+  console. There should be console output something like this:
+
+    connecting root (delay 0s)
+    resetting retries for channel root
+
+  The line 'resetting retries...' indicates that the connection is live.
+
+  To send a command to the browser, 
+
+    $ cd ~/src/chromed/client
+    $ python -i command.py
+    >>> chrome('window.location.href')
+    '"chrome-extension://gobbledygookeryrandomlowercaseletters/background.html"'
+
+  To open a new tab
+
+    >>> chrome('Channel.create("google", "http://www.google.com")')
+    '"ok"'
+
+  To send a command to the new tab via its channel "google"
+
+    >>> chrome('window.location.href', 'google')
+    '"http://www.google.com/"'
+
+  See extension/channel.js for the Channel API.
